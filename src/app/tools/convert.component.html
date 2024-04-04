@@ -1,0 +1,8 @@
+<div>
+  <input id="image-select" type="file" accept="*" multiple (change)="onSelectFilesFromTarget($event.target)" />
+  <button [disabled]="loading" (click)="convertAll()">Convert</button>
+  <p *ngIf="loading">loading...</p>
+  <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap">
+    <img *ngFor="let src of convertedImageSrcs" [src]="src" style="width: 500px" />
+  </div>
+</div>
