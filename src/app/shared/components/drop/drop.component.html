@@ -1,0 +1,12 @@
+<div
+  appDragDrop
+  [disable]="disable"
+  (onHover)="dragHover = true"
+  (onUnhover)="dragHover = false"
+  (onFileDropped)="fileDrop($event)"
+>
+  @if (dragHover) {
+  <div>Drag hover</div>
+  }
+  <ng-content></ng-content>
+</div>

@@ -1,7 +1,24 @@
 <div>
-  <input id="image-select" type="file" accept="*" multiple (change)="onSelectFilesFromTarget($event.target)" />
-  <button [disabled]="loading" (click)="convertAll()">Convert</button>
+  <div style="display: flex; gap: 5px">
+    <p>Total files {{ conversionCache.length }}:</p>
+    <ng-container *ngFor="let conversion of conversionCache; let last = last">
+      <p>{{ conversion.file.name }}</p>
+      <p *ngIf="!last">,</p>
+    </ng-container>
+  </div>
   <p *ngIf="loading">loading...</p>
+  <div style="width: 500px; border: 1px solid grey">
+    <app-drop (onFileDrop)="onSelectFiles($event)">
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 500px">
+        <p>Drag and drop here</p>
+        or
+        <input id="image-select" type="file" accept="*" multiple (change)="onSelectFilesFromTarget($event.target)" />
+      </div>
+    </app-drop>
+  </div>
+
+  <button style="margin-top: 10px" [disabled]="loading" (click)="convertAll()">Convert</button>
+
   <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap">
     <img *ngFor="let src of convertedImageSrcs" [src]="src" style="width: 500px" />
   </div>

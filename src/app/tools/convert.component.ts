@@ -1,8 +1,11 @@
+import { CommonModule } from "@angular/common"
 import { Component, NgZone, inject } from "@angular/core"
 import { map, of, switchMap, tap } from "rxjs"
 import { forkJoinSafe } from "../lib/safe-fork-join"
 import { ConversionResponse } from "../services/convert-raw-preview.service"
 import { ConvertRawService } from "../services/convert-raw.service"
+import { DropComponent } from "../shared/components/drop/drop.component"
+import { DragDropDirective } from "../shared/directives/drag-and-drop.directive"
 
 export type FileConversion = {
   file: File
@@ -18,11 +21,13 @@ export type FileConversion = {
   selector: "app-convert",
   templateUrl: "./convert.component.html",
   styleUrls: ["./convert.component.scss"],
+  standalone: true,
+  imports: [CommonModule, DragDropDirective, DropComponent],
 })
 export class ConvertComponent {
   private convertRawService = inject(ConvertRawService)
   private zone = inject(NgZone)
-  private conversionCache: FileConversion[] = []
+  conversionCache: FileConversion[] = []
 
   convertedImageSrcs: string[]
 
@@ -33,6 +38,10 @@ export class ConvertComponent {
   onSelectFilesFromTarget(target: EventTarget) {
     const files = Array.from((target as HTMLInputElement).files)
 
+    return this.onSelectFiles(files)
+  }
+
+  onSelectFiles(files: File[]) {
     this.conversionCache = []
     // Mac dinh toFormat = jpg
     this.conversionCache.push(

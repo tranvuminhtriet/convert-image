@@ -5,8 +5,8 @@ import { AppComponent } from "./app.component"
 import { ConvertComponent } from "./tools/convert.component"
 
 @NgModule({
-  declarations: [AppComponent, ConvertComponent],
-  imports: [BrowserModule, RouterOutlet],
+  declarations: [AppComponent],
+  imports: [BrowserModule, RouterOutlet, ConvertComponent],
   providers: [],
   bootstrap: [AppComponent],
 })
